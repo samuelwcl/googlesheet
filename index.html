@@ -57,7 +57,7 @@
         const googleSheetURL = 'https://script.google.com/macros/s/AKfycbyYRgIEcw1hG7VGQDOLctrryVq4rsnHqqDWkOXpwoF9ucDEK_nXpnUkKgXFXGsVCQc/exec';
 
         // Fetch the data from Google Sheets
-        fetch(googleSheetURL)  <!-- Corrected the fetch URL with proper quotation marks -->
+        fetch('https://script.google.com/macros/s/AKfycbyYRgIEcw1hG7VGQDOLctrryVq4rsnHqqDWkOXpwoF9ucDEK_nXpnUkKgXFXGsVCQc/exec')
             .then(response => response.json())
             .then(data => {
                 const container = document.getElementById("petProfilesContainer");

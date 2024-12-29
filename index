@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #shareLocationButton {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #shareLocationButton:hover {
+            background-color: #45a049;
+        }
+
+        #locationLink {
+            display: none;
+            margin-top: 20px;
+        }
+
+        #locationLink a {
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Pet Profiles</h1>
+    <div id="petProfilesContainer"></div>
+
+    <script>
+        // Replace with your Google Apps Script web app URL
+        const https://script.google.com/macros/s/AKfycbyYRgIEcw1hG7VGQDOLctrryVq4rsnHqqDWkOXpwoF9ucDEK_nXpnUkKgXFXGsVCQc/exec
+ = 'https://script.google.com/macros/s/your-deployment-id/exec';
+
+        // Fetch the data from Google Sheets
+        fetch(https://script.google.com/macros/s/AKfycbyYRgIEcw1hG7VGQDOLctrryVq4rsnHqqDWkOXpwoF9ucDEK_nXpnUkKgXFXGsVCQc/exec
+)
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById("petProfilesContainer");
+
+                // Loop through each pet profile and display it
+                data.forEach(pet => {
+                    const petProfileDiv = document.createElement('div');
+                    petProfileDiv.classList.add('pet-profile');
+
+                    petProfileDiv.innerHTML = `
+                        <h2>${pet.petName}</h2>
+                        <img src="${pet.petPhoto}" alt="${pet.petName}" style="max-width: 300px;">
+                        <p><strong>Owner:</strong> ${pet.ownerName}</p>
+                        <p><strong>Email:</strong> <a href="mailto:${pet.ownerEmail}">${pet.ownerEmail}</a></p>
+                        <p><strong>Phone:</strong> <a href="https://wa.me/${pet.ownerPhone}" target="_blank">${pet.ownerPhone}</a></p>
+                        <button class="shareLocationButton" data-latitude="0" data-longitude="0" data-petName="${pet.petName}" data-ownerName="${pet.ownerName}" data-ownerEmail="${pet.ownerEmail}" data-ownerPhone="${pet.ownerPhone}">Share Location</button>
+                    `;
+
+                    container.appendChild(petProfileDiv);
+                });
+
+                // Set up location sharing buttons
+                document.querySelectorAll('.shareLocationButton').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const latitude = 0;  // You can replace this with actual pet location or a placeholder
+                        const longitude = 0; // You can replace this with actual pet location or a placeholder
+                        const petName = this.getAttribute('data-petName');
+                        const ownerName = this.getAttribute('data-ownerName');
+                        const ownerEmail = this.getAttribute('data-ownerEmail');
+                        const ownerPhone = this.getAttribute('data-ownerPhone');
+
+                        const locationMessage = `Hello, I am sharing the location of ${petName}. My current location is: Latitude: ${latitude}, Longitude: ${longitude}. You can view it on Google Maps here: https://www.google.com/maps?q=${latitude},${longitude}`;
+
+                        const whatsappLink = `https://wa.me/${ownerPhone}?text=${encodeURIComponent(locationMessage)}`;
+                        const emailLink = `mailto:${ownerEmail}?subject=Location of ${petName}&body=${encodeURIComponent(locationMessage)}`;
+
+                        // Open WhatsApp and email links
+                        window.open(whatsappLink, '_blank');
+                        window.open(emailLink, '_blank');
+                    });
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    </script>
+
+</body>
+</html>

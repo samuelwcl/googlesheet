@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pet Profile</title>
+    <title>Pet Profiles</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -15,7 +15,15 @@
             color: #333;
         }
 
-        #shareLocationButton {
+        .pet-profile {
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        .shareLocationButton {
             padding: 10px 20px;
             font-size: 16px;
             background-color: #4CAF50;
@@ -24,7 +32,7 @@
             cursor: pointer;
         }
 
-        #shareLocationButton:hover {
+        .shareLocationButton:hover {
             background-color: #45a049;
         }
 
@@ -46,12 +54,10 @@
 
     <script>
         // Replace with your Google Apps Script web app URL
-        const https://script.google.com/macros/s/AKfycbyYRgIEcw1hG7VGQDOLctrryVq4rsnHqqDWkOXpwoF9ucDEK_nXpnUkKgXFXGsVCQc/exec
- = 'https://script.google.com/macros/s/your-deployment-id/exec';
+        const googleSheetURL = 'https://script.google.com/macros/s/AKfycbyYRgIEcw1hG7VGQDOLctrryVq4rsnHqqDWkOXpwoF9ucDEK_nXpnUkKgXFXGsVCQc/exec';
 
         // Fetch the data from Google Sheets
-        fetch(https://script.google.com/macros/s/AKfycbyYRgIEcw1hG7VGQDOLctrryVq4rsnHqqDWkOXpwoF9ucDEK_nXpnUkKgXFXGsVCQc/exec
-)
+        fetch(https://script.google.com/macros/s/AKfycbyYRgIEcw1hG7VGQDOLctrryVq4rsnHqqDWkOXpwoF9ucDEK_nXpnUkKgXFXGsVCQc/exec)
             .then(response => response.json())
             .then(data => {
                 const container = document.getElementById("petProfilesContainer");

@@ -57,26 +57,32 @@
         const googleSheetURL = 'https://script.google.com/macros/s/AKfycbyYRgIEcw1hG7VGQDOLctrryVq4rsnHqqDWkOXpwoF9ucDEK_nXpnUkKgXFXGsVCQc/exec';
 
         // Fetch the data from Google Sheets
-        fetch('https://script.google.com/macros/s/AKfycbyYRgIEcw1hG7VGQDOLctrryVq4rsnHqqDWkOXpwoF9ucDEK_nXpnUkKgXFXGsVCQc/exec')
+        fetch(googleSheetURL)
             .then(response => response.json())
             .then(data => {
                 const container = document.getElementById("petProfilesContainer");
+                
+                // Get the pet code from URL parameters (if any)
+                const urlParams = new URLSearchParams(window.location.search);
+                const petCodeFilter = urlParams.get('code');
 
                 // Loop through each pet profile and display it
                 data.forEach(pet => {
-                    const petProfileDiv = document.createElement('div');
-                    petProfileDiv.classList.add('pet-profile');
+                    if (!petCodeFilter || pet.code === petCodeFilter) {
+                        const petProfileDiv = document.createElement('div');
+                        petProfileDiv.classList.add('pet-profile');
 
-                    petProfileDiv.innerHTML = `
-                        <h2>${pet.petName}</h2>
-                        <img src="${pet.petPhoto}" alt="${pet.petName}" style="max-width: 300px;">
-                        <p><strong>Owner:</strong> ${pet.ownerName}</p>
-                        <p><strong>Email:</strong> <a href="mailto:${pet.ownerEmail}">${pet.ownerEmail}</a></p>
-                        <p><strong>Phone:</strong> <a href="https://wa.me/${pet.ownerPhone}" target="_blank">${pet.ownerPhone}</a></p>
-                        <button class="shareLocationButton" data-latitude="0" data-longitude="0" data-petName="${pet.petName}" data-ownerName="${pet.ownerName}" data-ownerEmail="${pet.ownerEmail}" data-ownerPhone="${pet.ownerPhone}">Share Location</button>
-                    `;
+                        petProfileDiv.innerHTML = `
+                            <h2>${pet.petName}</h2>
+                            <img src="${pet.petPhoto}" alt="${pet.petName}" style="max-width: 300px;">
+                            <p><strong>Owner:</strong> ${pet.ownerName}</p>
+                            <p><strong>Email:</strong> <a href="mailto:${pet.ownerEmail}">${pet.ownerEmail}</a></p>
+                            <p><strong>Phone:</strong> <a href="https://wa.me/${pet.ownerPhone}" target="_blank">${pet.ownerPhone}</a></p>
+                            <button class="shareLocationButton" data-latitude="0" data-longitude="0" data-petName="${pet.petName}" data-ownerName="${pet.ownerName}" data-ownerEmail="${pet.ownerEmail}" data-ownerPhone="${pet.ownerPhone}">Share Location</button>
+                        `;
 
-                    container.appendChild(petProfileDiv);
+                        container.appendChild(petProfileDiv);
+                    }
                 });
 
                 // Set up location sharing buttons
